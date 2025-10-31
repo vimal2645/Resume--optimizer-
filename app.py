@@ -298,14 +298,31 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-
+# Header
 st.markdown('<div class="main-header">🎯 AI Resume Optimizer</div>', unsafe_allow_html=True)
-st.markdown('<p style="text-align:center;color:#666;">Upload resume + paste JD. Get accurate ATS score + optimized DOCX.</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center;color:#fff;font-size:1.1rem;">Upload resume + paste JD. Get accurate ATS score + optimized DOCX.</p>', unsafe_allow_html=True)
 
+# ========== ADSTERRA BANNER AD (TOP) ==========
+st.markdown("""
+<div style="text-align: center; margin: 20px 0;">
+<script type="text/javascript">
+atOptions = {
+'key' : '0fffadfc8b3463520518a4244ad1f554',
+'format' : 'iframe',
+'height' : 90,
+'width' : 728,
+'params' : {}
+};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/0fffadfc8b3463520518a4244ad1f554/invoke.js"></script>
+</div>
+""", unsafe_allow_html=True)
+
+# Initialize session states
 if 'analysis_done' not in st.session_state:
     st.session_state.analysis_done = False
 
+# Upload Section
 col1, col2 = st.columns([1, 1])
 
 with col1:
@@ -316,6 +333,7 @@ with col2:
     st.markdown("#### 📋 Paste Job Description")
     job_description = st.text_area("Job Description", height=200, placeholder="Paste full JD...", label_visibility="collapsed")
 
+# Analyze Button
 if st.button("🚀 Analyze", type="primary"):
     if not uploaded_file:
         st.error("Upload a resume")
@@ -342,12 +360,15 @@ if st.button("🚀 Analyze", type="primary"):
             except Exception as e:
                 st.error(f"Error: {str(e)[:100]}")
 
+# Results Section
 if st.session_state.analysis_done:
     score_data = st.session_state.score_data
     resume_text = st.session_state.resume_text
     job_keywords = st.session_state.job_keywords
     
     st.markdown("---")
+    
+    # Metrics
     cols = st.columns(4)
     with cols[0]:
         st.markdown(f"<div class='metric-card'><h2>{score_data['ats_score']}%</h2>ATS Score</div>", unsafe_allow_html=True)
@@ -357,8 +378,10 @@ if st.session_state.analysis_done:
         st.metric("Missing", score_data['missing_count'])
     with cols[3]:
         st.metric("vs Avg", f"{score_data['ats_score']-67:+}%")
+    
     st.markdown("---")
 
+    # Skills Display
     col_l, col_r = st.columns(2)
     with col_l:
         st.write("**✅ Matched Skills**")
@@ -377,6 +400,7 @@ if st.session_state.analysis_done:
             
     st.markdown("---")
 
+    # Download Section
     tab1, tab2, tab3 = st.tabs(["Download", "Info", "Help"])
     with tab1:
         c1, c2, c3 = st.columns(3)
@@ -389,12 +413,30 @@ if st.session_state.analysis_done:
         with c3:
             report_docx = create_ats_report_docx(score_data, job_keywords)
             st.download_button("📊 Report", data=report_docx, file_name=f"Report.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    
     with tab2:
         st.write(f"**Job:** {job_keywords.get('job_title','N/A')}")
         st.write(f"**Company:** {job_keywords.get('company','N/A')}")
         st.write(f"**Must Have:** {len(job_keywords.get('must_have',[]))}")
+    
     with tab3:
         st.write("1. Upload resume (PDF/DOCX)")
         st.write("2. Paste job description")
         st.write("3. Click Analyze")
         st.write("4. Download optimized docs")
+
+# ========== ADSTERRA BANNER AD (BOTTOM) ==========
+st.markdown("""
+<div style="text-align: center; margin: 30px 0;">
+<script type="text/javascript">
+atOptions = {
+'key' : '0fffadfc8b3463520518a4244ad1f554',
+'format' : 'iframe',
+'height' : 90,
+'width' : 728,
+'params' : {}
+};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/0fffadfc8b3463520518a4244ad1f554/invoke.js"></script>
+</div>
+""", unsafe_allow_html=True)
